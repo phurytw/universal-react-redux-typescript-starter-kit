@@ -1,0 +1,66 @@
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+}
+
+.logos * {
+    margin: 0 0.5em;
+}
+
+.react {
+    width: 10vw;
+}
+
+.redux {
+    width: 10vw;
+}
+
+.typescript {
+    width: 24vw;
+    margin-bottom: 1em;
+}
+
+.webpack {
+    width: 8vw;
+}
+
+.header {
+    background: rgb(21, 39, 64);
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 1em;
+    font-weight: bold;
+}
+
+.navbar {
+    background: #DDD;
+    text-align: center;
+}
+
+.navbar ul {
+    color: black;
+    list-style: none;
+    margin: 0;
+}
+
+.navbar li {
+    display: inline;
+}
+
+.navbar a {
+    color: black;
+    padding: 1em;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    background-color: #555;
+    color: #FFA700;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}

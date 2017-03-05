@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        "target": "es5",
+        "jsx": "react",
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "inlineSources": true
+    },
+    "exclude": [
+        "node_modules",
+        "webpack.config.ts",
+        "scripts"
+    ]
+}
