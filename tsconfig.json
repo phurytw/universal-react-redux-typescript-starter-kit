@@ -7,7 +7,6 @@
         "target": "es5",
         "jsx": "react",
         "noUnusedLocals": true,
-        "noUnusedParameters": true,
         "inlineSources": true
     },
     "exclude": [
