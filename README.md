@@ -1,4 +1,4 @@
-# universal-react-redux-typescript-starter-kit
+# Universal React Redux starter kit with TypeScript and Webpack 2
 
 A minimal starter kit with React, Redux, server side rendering, hot module replacement, and Webpack 2. 100% TypeScript.
 
