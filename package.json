@@ -1,6 +1,6 @@
 {
   "name": "universal-react-redux-typescript-starter-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A minimal starter kit with React, Redux, server side rendering, hot reloading, and Webpack 2. 100% TypeScript.",
   "scripts": {
     "start": "npm run start:dev",

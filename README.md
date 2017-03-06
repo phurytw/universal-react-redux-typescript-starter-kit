@@ -36,7 +36,7 @@ Tooling:
 
 ## A bit of explanation
 
-Most of the code is the React/Redux application. The action creators and reducers are located in the `src/modules` directory following the convention proposed [here](https://github.com/erikras/ducks-modular-redux). The root reducer is located in `src/reducer.ts`.
+Most of the code is just the React/Redux application. The action creators and reducers are located in the `src/modules` directory following the convention proposed [here](https://github.com/erikras/ducks-modular-redux). The root reducer is located in `src/reducer.ts`.
 
 Everything that is server side is located in `src/server.tsx` which has a single `express` application that is responsible for the Hot Module Replacement, the server side rendering, and is also itself a tiny API service for the client app.
 
@@ -84,10 +84,10 @@ This is what will be called whenever your webpack bundle is updated. This will r
 
 In `src/server.tsx`, the final request handler is where server side rendering is done. First the `match` method of `react-router` will get the components to render according to the URL (`req.originalUrl`) and our defined routes.
 
-In each of our components (i.e. `src/components/Text.tsx`) that require data to be fetched we have a `fetchData` static method. These methods will dispatch the necessary data to a newly created Redux store.
+In each of our components (i.e. `src/components/Main.tsx`) that require data to be fetched we have a `fetchData` static method. These methods will dispatch the necessary data to a newly created Redux store.
 This method must return a `Promise` so we can wait for data that needs to be fetched asynchronously with `Promise.all`.
 
-After the data has been fetched we dispatch an action (`setRendered`)that will tell the client not to fetch data again (see `componentWillMount` method in `src/components/Text.tsx`).
+After the data has been fetched we dispatch an action (`setRendered`)that will tell the client not to fetch data again (see `componentWillMount` method in `src/components/Main.tsx`).
 
 The `Helmet.rewind()` call returns an object that we can use to write HTML tags with attributes that will be used by `react-helmet`. If `react-helmet` is used by any of our component the tags will be updated server side.
 
@@ -101,39 +101,13 @@ You can debug in the VSCode editor by using the debug configurations in the `.vs
 
 ## Now what
 
-### API Service
-
-You may most likely want to get rid of the `app.get("/api", [...])` in `src/server.tsx` and use your own API service.
-
 ### Testing
 
-There is no test in this package to let the choice up to you. If you wish to write tests I recommend that you use [`ts-node`](https://github.com/TypeStrong/ts-node#mocha) with your test framework CLI. Here's a simple example with [`mocha`](https://github.com/mochajs/mocha):
-
-Install it:
-```
-npm i -D mocha
-```
-Add a script with this command to your `package.json`:
-```
-mocha src/**/*.tests.* --compilers ts:ts-node/register,tsx:ts-node/register
-```
-
-If you have multiple `tsconfig.json` files you can use them in `mocha`. First create a file (i.e. `ts-node-register.js`):
-```javascript
-require("ts-node").register({
-    project: "your_ts_config.json",
-    lazy: true
-});
-```
-
-Then you can change your test script with this:
-```
-mocha src/**/*.tests.* --compilers ts:./ts-node-register.js,tsx:./ts-node-register.js
-```
+There is no test in this package to let the choice up to you. If you wish to write tests I recommend that you use [`ts-node`](https://github.com/TypeStrong/ts-node#mocha) with your test framework CLI.
 
 ### Babel
 
-There is no any Babel insanity because it is not required if you have set `target` to `es5` and `jsx` to `react` in your `tsconfig.json`. However, if you wish to use Babel this is what you can do:
+There is no any Babel insanity because it is not required if you have set `target` to `es5` and `jsx` to `react` in your `tsconfig.json`. However, if you wish to use Babel (i.e. for plugins or async/await) this is what you can do:
 
 Install Babel and friends:
 ```
@@ -164,3 +138,7 @@ You'll need to create a `.babelrc` file with this (more explanation [here](https
     ]
 }
 ```
+
+And you're good to go !
+
+## 

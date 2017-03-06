@@ -64,3 +64,15 @@ html {
     max-width: 960px;
     margin: 0 auto;
 }
+
+.face {
+    float: right;
+    max-width: 100px;
+}
+
+.github-preview {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2em;
+    margin: 2em;
+}

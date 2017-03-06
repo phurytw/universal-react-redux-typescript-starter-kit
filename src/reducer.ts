@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
-import { TextState, default as text } from "./modules/text";
+import { GitHubUserState, default as user } from "./modules/user";
 import { RenderingState, default as rendering } from "./modules/rendering";
 
 export interface ReduxState {
-    text?: TextState;
+    user?: GitHubUserState;
     rendering?: RenderingState;
 }
 
 export default combineReducers<ReduxState>({
-    text,
+    user,
     rendering
 });

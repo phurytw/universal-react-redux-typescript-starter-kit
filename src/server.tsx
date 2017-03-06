@@ -1,4 +1,7 @@
 /// <reference path="./typings.d.ts" />
+// tslint:disable-next-line:no-unused-variable
+import * as React from "react";
+import { renderToString, renderToStaticMarkup } from "react-dom/server";
 import * as express from "express";
 import * as webpackDevMiddleware from "webpack-dev-middleware";
 import * as webpackHotMiddleware from "webpack-hot-middleware";
@@ -8,9 +11,6 @@ import webpackConfig from "../webpack.config";
 import { Express, Request, Response } from "express-serve-static-core";
 import { match } from "react-router";
 import { RouterContext } from "react-router";
-// tslint:disable-next-line:no-unused-variable
-import * as React from "react";
-import { renderToString, renderToStaticMarkup } from "react-dom/server";
 import * as Helmet from "react-helmet";
 import routes from "./routes";
 import { Provider } from "react-redux";
@@ -38,10 +38,8 @@ if (process.env.NODE_ENV !== "production") {
     app.use(webpackHotMiddleware(compiler));
 }
 
+// needed to serve our application in production
 app.use(express.static("./dist/static"));
-// this is here for demo purposes
-// feel free to remove it and use your own server
-app.get("/api", (req: Request, res: Response) => setTimeout(() => res.send("Hey this is some text that is supposed to be obtained asynchronously. If you see this right away it means that server side rendering is working properly. This message is also present in your Redux store !!"), 1000));
 
 app.get("*", (req: Request, res: Response) => {
     match({ location: req.originalUrl, routes: routes() } as any, (err: Error, redirectionLocation: Location, renderProps: any) => {
