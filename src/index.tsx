@@ -1,3 +1,4 @@
+/// <reference path="./typings.d.ts" />
 // tslint:disable-next-line:no-unused-variable
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -30,12 +31,10 @@ render(Routes);
 // set rendered to false to newly mounted components can load
 setRendered(store.dispatch, false);
 
-// this is the bit that is responsible of updating your page in real time
-if ((module as any).hot) {
-    (module as any).hot.accept("./routes", () => {
-        // we need to use require here to get the updated module (import will not work)
+// hot reloading
+if (module.hot) {
+    module.hot.accept("./routes", () => {
         const App: any = require("./routes").default;
-        // update !!
         render(App);
     });
 }

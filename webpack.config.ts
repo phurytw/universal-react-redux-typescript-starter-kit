@@ -5,7 +5,8 @@ import * as ExtractTextPlugin from "extract-text-webpack-plugin";
 export default (env: string): Configuration => {
     // add hot module replacement if not in production
     let entry: Entry = {
-        main: "./src/index.tsx"
+        main: "./src/index.tsx",
+        vendor: ["react", "react-dom", "react-router", "redux", "react-helmet", "react-redux", "serialize-javascript"]
     };
     entry = env !== "production" ? {
         hot: ["react-hot-loader/patch", "webpack-hot-middleware/client"],
@@ -14,7 +15,7 @@ export default (env: string): Configuration => {
     // set devtool according to the environment
     const devtool: "source-map" | "eval-source-map" = env === "production" ? "source-map" : "eval-source-map";
     let plugins: Plugin[] = [new optimize.CommonsChunkPlugin({
-        names: ["manifest"]
+        names: ["vendor", "common"]
     }), new ExtractTextPlugin("styles.css")];
     // set plugins hot module replacement plugins if not in production
     plugins = env === "production" ? [...plugins, new DefinePlugin({
@@ -28,7 +29,8 @@ export default (env: string): Configuration => {
         compress: {
             screw_ie8: true,
             warnings: false
-        }
+        },
+        sourceMap: true
     })] : [...plugins,
     new HotModuleReplacementPlugin(),
     new NamedModulesPlugin()];
@@ -37,15 +39,10 @@ export default (env: string): Configuration => {
         entry,
         output: {
             filename: "[name].js",
-            path: resolve(__dirname, "dist"),
+            path: resolve(__dirname, "dist", "static"),
             publicPath: "/"
         },
         devtool,
-        devServer: {
-            hot: true,
-            contentBase: resolve(__dirname, "dist"),
-            publicPath: "/"
-        },
         resolve: {
             extensions: [".tsx", ".ts", ".js", ".css"]
         },

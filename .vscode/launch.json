@@ -7,11 +7,19 @@
         {
             "type": "node2",
             "request": "attach",
-            "name": "Attach to Port",
+            "name": "Node",
             "address": "localhost",
             "port": 9229,
             "restart": true,
             "localRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Chrome",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}"
         }
     ]
 }

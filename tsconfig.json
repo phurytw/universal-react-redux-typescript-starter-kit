@@ -7,11 +7,10 @@
         "target": "es5",
         "jsx": "react",
         "noUnusedLocals": true,
-        "inlineSources": true
+        "noImplicitAny": true,
+        "sourceMap": true
     },
-    "exclude": [
-        "node_modules",
-        "webpack.config.ts",
-        "scripts"
+    "files": [
+        "./src/index.tsx"
     ]
 }

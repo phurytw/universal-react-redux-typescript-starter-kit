@@ -29,13 +29,11 @@ class TextComponent extends React.Component<TextProps, {}> {
     constructor(props: TextProps) {
         super(props);
     }
-    // this function will be used by the server to fetch data before rendering
-    // it must return a Promise
     static fetchData(dispatch: Dispatch<ReduxState>): Promise<void> {
         return fetchText(dispatch);
     }
     componentWillMount(): void {
-        // this prevents the data to be fetched on page load by the client (it is fetched by the server)
+        // this prevents the data to be fetched on page load by the client (if it has been already fetched by the server)
         if (!this.props.hasRendered) {
             this.props.fetchText();
         }
