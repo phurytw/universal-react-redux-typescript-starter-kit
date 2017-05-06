@@ -2,24 +2,24 @@ import { Dispatch, Action } from "redux";
 
 // default state
 export interface RenderingState {
-    hasRendered: boolean;
+    isServerSide: boolean;
 }
 const defaultState: RenderingState = {
-    hasRendered: false
+    isServerSide: false
 };
 
 // types
-type SetRenderedAction = { hasRendered: boolean } & Action;
+type SetRenderedAction = { isServerSide: boolean } & Action;
 
 // actions
 const SET_RENDERED: string = "rendering/SET_RENDERED";
 
 // action creators
-export const setRendered: (dispatch: Dispatch<RenderingState>, hasRendered: boolean) => void =
-    (dispatch: Dispatch<RenderingState>, hasRendered: boolean): void => {
+export const setIsServerSide: (dispatch: Dispatch<RenderingState>, isServerSide: boolean) => void =
+    (dispatch: Dispatch<RenderingState>, isServerSide: boolean): void => {
         dispatch<SetRenderedAction>({
             type: SET_RENDERED,
-            hasRendered
+            isServerSide
         });
     };
 
@@ -29,7 +29,7 @@ const reducer: (state: RenderingState, action: Action) => RenderingState =
         switch (action.type) {
             case SET_RENDERED:
                 return {
-                    hasRendered: (action as SetRenderedAction).hasRendered
+                    isServerSide: (action as SetRenderedAction).isServerSide
                 };
             default:
                 return state;

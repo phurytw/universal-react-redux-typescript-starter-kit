@@ -1,6 +1,3 @@
-/**
- * @file Builds the webpack bundle
- */
 import * as webpack from "webpack";
 import webpackConfig from "../webpack.config";
 import * as ts from "typescript";
@@ -39,4 +36,3 @@ if (emitResult.emitSkipped) {
 } else {
     console.log("Server successfully compiled");
 }
-

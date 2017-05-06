@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { Configuration, optimize, HotModuleReplacementPlugin, NamedModulesPlugin, Entry, DefinePlugin, Plugin, LoaderOptionsPlugin } from "webpack";
+import { Configuration, optimize, HotModuleReplacementPlugin, NamedModulesPlugin, Entry, DefinePlugin, Plugin, LoaderOptionsPlugin, Rule } from "webpack";
 import * as ExtractTextPlugin from "extract-text-webpack-plugin";
 
 export default (env: string): Configuration => {
@@ -34,6 +34,13 @@ export default (env: string): Configuration => {
     })] : [...plugins,
     new HotModuleReplacementPlugin(),
     new NamedModulesPlugin()];
+    const cssRule: Rule = env === "production" ? {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract(["css-loader", "postcss-loader"])
+    } : {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader", "postcss-loader"]
+        };
 
     return {
         entry,
@@ -53,10 +60,7 @@ export default (env: string): Configuration => {
                     use: ["awesome-typescript-loader"],
                     exclude: /node_modules/
                 },
-                {
-                    test: /\.css$/,
-                    use: ExtractTextPlugin.extract(["css-loader", "postcss-loader"]),
-                }
+                cssRule
             ]
         },
         plugins

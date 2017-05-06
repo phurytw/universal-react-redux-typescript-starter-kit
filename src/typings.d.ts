@@ -13,11 +13,5 @@ interface NodeModule {
 }
 
 declare module "react-hot-loader" {
-    const AppContainer: () => JSX.Element;
-}
-
-declare module "serialize-javascript" {
-    namespace serializeJavascript { }
-    function serializeJavascript(any: any, options?: any): string;
-    export = serializeJavascript;
+    const AppContainer: (props?: { children: JSX.Element }) => JSX.Element;
 }

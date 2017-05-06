@@ -33,7 +33,7 @@ const SET_USER_DATA: string = "user/SET_USER_DATA";
 const SET_USER_ERROR: string = "user/SET_USER_ERROR";
 
 // action creators
-export function fetchUser(dispatch: Dispatch<GitHubUserState>, username: string): Promise<void> {
+export function fetchUser(dispatch: Dispatch<GitHubUserState>, username: string): Promise<any> {
     dispatch<SetUserAction>({
         type: SET_USER_DATA,
         user: undefined
@@ -42,20 +42,17 @@ export function fetchUser(dispatch: Dispatch<GitHubUserState>, username: string)
         type: SET_USER_ERROR,
         error: undefined
     });
-    return fetch(`https://api.github.com/users/${username}`).then((response: Response) => {
+    return fetch(`https://api.github.com/users/${username}`).then<SetUserAction | SetUserError>((response: Response) => {
         if (response.status >= 400) {
             return dispatch<SetUserError>({
                 type: SET_USER_ERROR,
                 error: response.status === 404 ? `User '${username}' could not be found` : "An error occurred"
             });
         } else {
-            return response.json().then((user: GitHubUserData) => {
-                console.log(user);
-                return dispatch<SetUserAction>({
-                    type: SET_USER_DATA,
-                    user
-                });
-            });
+            return response.json().then((user: GitHubUserData) => dispatch<SetUserAction>({
+                type: SET_USER_DATA,
+                user
+            }));
         }
     });
 }

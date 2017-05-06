@@ -1,5 +1,4 @@
 /// <reference path="./typings.d.ts" />
-// tslint:disable-next-line:no-unused-variable
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
@@ -8,19 +7,21 @@ import { Provider } from "react-redux";
 import { Store } from "redux";
 import { ReduxState } from "./reducer";
 import createStore from "./store";
-import "./global.css";
-import "normalize.css/normalize.css";
-import { setRendered } from "./modules/rendering";
+import "./example/global.css";
+import { setIsServerSide } from "./example/modules/serverSide";
+import { renderRoutes, RouteConfig } from "react-router-config";
+import { BrowserRouter } from "react-router-dom";
 
-// this is defined with an up-to-state state if we come from a server side rendering context
-const initialState: ReduxState = window.__REDUX_STATE__;
-const store: Store<ReduxState> = createStore(initialState);
+// this is defined with an up-to-date state if we come from a server side rendering context
+const store: Store<ReduxState> = createStore(window.__REDUX_STATE__);
 
-const render: (component: any) => void = (Component) => {
+const render: (routes: RouteConfig[]) => void = (routes: RouteConfig[]) => {
     ReactDOM.render(
         <AppContainer>
             <Provider store={store}>
-                <Component />
+                <BrowserRouter>
+                    {renderRoutes(routes)}
+                </BrowserRouter>
             </Provider>
         </AppContainer>,
         document.getElementById("root")
@@ -28,8 +29,8 @@ const render: (component: any) => void = (Component) => {
 };
 render(Routes);
 
-// set rendered to false to newly mounted components can load
-setRendered(store.dispatch, false);
+// set rendered to false so newly mounted components can load
+setIsServerSide(store.dispatch, false);
 
 // hot reloading
 if (module.hot) {

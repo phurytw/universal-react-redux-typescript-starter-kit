@@ -1,13 +1,22 @@
-// tslint:disable-next-line:no-unused-variable
-import * as React from "react";
-import { Router, Route, browserHistory, IndexRoute } from "react-router";
+import { RouteConfig } from "react-router-config";
 import Layout from "./components/Layout";
-import Main from "./components/Main";
-import About from "./components/About";
+import GitHubSearchLayout from "./example/components/GitHubSearchLayout";
+import Main from "./example/components/Main";
+import About from "./example/components/About";
 
-export default () => <Router history={browserHistory}>
-    <Route path="/" component={Layout}>
-        <IndexRoute component={Main} />
-        <Route path="/about" component={About} />
-    </Route>
-</Router>;
+const routeConfig: RouteConfig[] = [
+    {
+        component: Layout,
+        routes: [{
+            component: GitHubSearchLayout,
+            routes: [{
+                component: About,
+                path: "/about"
+            }, {
+                component: Main,
+            }]
+        }]
+    }
+];
+
+export default routeConfig;

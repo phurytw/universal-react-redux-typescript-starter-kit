@@ -1,16 +1,19 @@
 {
     "compilerOptions": {
         "lib": [
-            "es6",
+            "es2015",
             "dom"
         ],
         "target": "es5",
         "jsx": "react",
-        "noUnusedLocals": true,
         "noImplicitAny": true,
-        "sourceMap": true
+        "noUnusedLocals": true,
+        "sourceMap": true,
+        "allowJs": true,
+        "outDir": "dist"
     },
-    "files": [
-        "./src/index.tsx"
+    "exclude": [
+        "node_modules",
+        "dist"
     ]
 }
