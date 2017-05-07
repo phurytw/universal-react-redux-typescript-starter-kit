@@ -5,20 +5,21 @@ A minimal starter kit with React, Redux, server side rendering with React-Router
 ## Quick start
 
 ```
-git clone https://github.com/lith-light-g/universal-react-redux-typescript-starter-kit.git
+git clone https://github.com/lith-light-g/universal-react-redux-typescript-starter-kit.git <directory_name>
+cd <directory_name>
 npm install
 npm start
 ```
 
-This will start the demo application. At this point you can delete the `src/example` directory and you will get a blank page ! (and a few errors you will have to fix 😔 in `src/index.tsx`, `src/reducer.ts` and `src/routes.tsx`)
+This will start the demo application available at [http://localhost:3000](http://localhost:3000). At this point you can delete the `src/example` directory and you will get a blank page! (and a few errors you will have to fix 😔 in `src/index.tsx`, `src/reducer.ts` and `src/routes.tsx`)
 
 ## Packages used
 
-* [react](https://github.com/facebook/react) and [react-dom](https://github.com/facebook/react) - your favourite JavaScript library !
+* [react](https://github.com/facebook/react) and [react-dom](https://github.com/facebook/react) - your favourite JavaScript library!
 * [react-hot-loader](https://github.com/gaearon/react-hot-loader) - used for hot reloading
 * [redux](https://github.com/reactjs/redux) - store for the application state
 * [react-redux](https://github.com/reactjs/react-redux) - use Redux with React
-* [typescript](https://github.com/Microsoft/TypeScript) - your favourite language !
+* [typescript](https://github.com/Microsoft/TypeScript) - your favourite language!
 * [webpack](https://github.com/webpack/webpack) - module bundler
 * [react-router-dom](https://github.com/ReactTraining/react-router) - routing
 * [react-router-config](https://github.com/ReactTraining/react-router) - helpful for server side rendering
@@ -37,7 +38,7 @@ This will start the demo application. At this point you can delete the `src/exam
 * [@types/<your_favourite_package>](https://github.com/DefinitelyTyped/DefinitelyTyped) - type definitions for TypeScript
 * [cross-env](https://github.com/kentcdodds/cross-env) - allows to set NODE_ENV on all platforms
 
-And that's about it !
+And that's about it!
 
 ## Explanation
 

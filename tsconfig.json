@@ -1,19 +1,19 @@
 {
-    "compilerOptions": {
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "target": "es5",
-        "jsx": "react",
-        "noImplicitAny": true,
-        "noUnusedLocals": true,
-        "sourceMap": true,
-        "allowJs": true,
-        "outDir": "dist"
-    },
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "jsx": "react",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "noUnusedLocals": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

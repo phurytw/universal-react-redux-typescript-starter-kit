@@ -1,5 +1,5 @@
+// tslint:disable
 /// <reference types="node" />
-// This file can also be used to define interfaces and types that are available globally in your application
 
 interface Window {
     __REDUX_STATE__: any;
@@ -8,7 +8,7 @@ interface Window {
 // Remove those when type definitions are available
 interface NodeModule {
     hot: {
-        accept: (pathToRootComponent: string, callback: () => void) => void
+        accept: (pathToRootComponent: string, callback: () => void) => void,
     };
 }
 

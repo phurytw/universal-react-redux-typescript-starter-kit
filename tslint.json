@@ -29,12 +29,7 @@
         "no-inferrable-types": [
             true
         ],
-        "no-import-side-effect": [
-            true,
-            {
-                "ignore-module": "^rxjs/"
-            }
-        ],
+        "no-import-side-effect": [false],
         "no-invalid-this": [
             true,
             "check-function-in-method"
@@ -43,10 +38,7 @@
         "no-require-imports": false,
         "no-switch-case-fall-through": true,
         "no-trailing-whitespace": true,
-        "no-unused-variable": [
-            true,
-            "react"
-        ],
+        "no-unused-variable": [true],
         "object-literal-sort-keys": false,
         "only-arrow-functions": [
             true,

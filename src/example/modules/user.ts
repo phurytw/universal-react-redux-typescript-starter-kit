@@ -1,17 +1,17 @@
-import { Dispatch, Action } from "redux";
+import { Dispatch, Action } from 'redux';
 
 // default state
-export interface GitHubUserState {
-    user?: GitHubUserData;
-    error?: string;
+export interface IGitHubUserState {
+    user?: IGitHubUserData | undefined;
+    error?: string | undefined;
 }
-const defaultState: GitHubUserState = {
+const defaultState: IGitHubUserState = {
 };
 
 // types
-type SetUserAction = { user: GitHubUserData } & Action;
-type SetUserError = { error: string } & Action;
-export interface GitHubUserData {
+type SetUserAction = { user: IGitHubUserData | undefined } & Action;
+type SetUserError = { error: string | undefined } & Action;
+export interface IGitHubUserData {
     avatar_url?: string;
     bio?: string;
     blog?: string;
@@ -29,47 +29,48 @@ export interface GitHubUserData {
 }
 
 // actions
-const SET_USER_DATA: string = "user/SET_USER_DATA";
-const SET_USER_ERROR: string = "user/SET_USER_ERROR";
+const SET_USER_DATA = 'user/SET_USER_DATA';
+const SET_USER_ERROR = 'user/SET_USER_ERROR';
 
 // action creators
-export function fetchUser(dispatch: Dispatch<GitHubUserState>, username: string): Promise<any> {
+export function fetchUser(dispatch: Dispatch<IGitHubUserState>, username: string): Promise<any> {
     dispatch<SetUserAction>({
         type: SET_USER_DATA,
-        user: undefined
+        user: undefined,
     });
     dispatch<SetUserError>({
         type: SET_USER_ERROR,
-        error: undefined
+        error: undefined,
     });
-    return fetch(`https://api.github.com/users/${username}`).then<SetUserAction | SetUserError>((response: Response) => {
-        if (response.status >= 400) {
-            return dispatch<SetUserError>({
-                type: SET_USER_ERROR,
-                error: response.status === 404 ? `User '${username}' could not be found` : "An error occurred"
-            });
-        } else {
-            return response.json().then((user: GitHubUserData) => dispatch<SetUserAction>({
-                type: SET_USER_DATA,
-                user
-            }));
-        }
-    });
+    return fetch(`https://api.github.com/users/${username}`)
+        .then<SetUserAction | SetUserError>((response: Response) => {
+            if (response.status >= 400) {
+                return dispatch<SetUserError>({
+                    type: SET_USER_ERROR,
+                    error: response.status === 404 ? `User '${username}' could not be found` : 'An error occurred',
+                });
+            } else {
+                return response.json().then((user: IGitHubUserData) => dispatch<SetUserAction>({
+                    type: SET_USER_DATA,
+                    user,
+                }));
+            }
+        });
 }
 
 // reducer
-const reducer: (state: GitHubUserState, action: Action) => GitHubUserState =
-    (state: GitHubUserState = defaultState, action: Action): GitHubUserState => {
+const reducer: (state: IGitHubUserState, action: Action) => IGitHubUserState =
+    (state: IGitHubUserState = defaultState, action: Action): IGitHubUserState => {
         switch (action.type) {
             case SET_USER_DATA:
                 return {
                     ...state,
-                    user: (action as SetUserAction).user
+                    user: (action as SetUserAction).user,
                 };
             case SET_USER_ERROR:
                 return {
                     ...state,
-                    error: (action as SetUserError).error
+                    error: (action as SetUserError).error,
                 };
             default:
                 return state;

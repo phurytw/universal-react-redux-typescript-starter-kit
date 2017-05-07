@@ -1,13 +1,13 @@
-import { combineReducers } from "redux";
-import { RenderingState, default as serverSide } from "./modules/serverSide";
-import { GitHubUserState, default as user } from "./example/modules/user";
+import { combineReducers } from 'redux';
+import { IRenderingState, default as serverSide } from './modules/serverSide';
+import { IGitHubUserState, default as user } from './example/modules/user';
 
-export interface ReduxState {
-    user?: GitHubUserState;
-    serverSide?: RenderingState;
+export interface IReduxState {
+    user: IGitHubUserState;
+    serverSide: IRenderingState;
 }
 
-export default combineReducers<ReduxState>({
+export default combineReducers<IReduxState>({
     user,
-    serverSide
+    serverSide,
 });

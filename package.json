@@ -8,7 +8,7 @@
     "start:dev": "ts-node ./src/server.tsx",
     "build:dev": "cross-env NODE_ENV=development ts-node scripts/build.ts",
     "build:prod": "cross-env NODE_ENV=production ts-node scripts/build.ts",
-    "lint": "tslint ./src/**/*.ts*"
+    "lint": "tslint --type-check -p tsconfig.json ./src/**/*.ts*"
   },
   "repository": {
     "type": "git",

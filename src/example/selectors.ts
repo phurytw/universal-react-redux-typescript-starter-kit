@@ -1,11 +1,11 @@
-import { ReduxState } from "../reducer";
-import { GitHubUserData } from "./modules/user";
+import { IReduxState } from '../reducer';
+import { IGitHubUserData } from './modules/user';
 
-export const getUser: (state: ReduxState) => GitHubUserData =
-    (state: ReduxState): GitHubUserData => state.user.user;
+export const getUser: (state: IReduxState) => IGitHubUserData | undefined =
+    (state: IReduxState): IGitHubUserData | undefined => state.user.user;
 
-export const getError: (state: ReduxState) => string =
-    (state: ReduxState): string => state.user.error;
+export const getError: (state: IReduxState) => string | undefined =
+    (state: IReduxState): string | undefined => state.user.error;
 
-export const isServerSide: (state: ReduxState) => boolean =
-    (state: ReduxState): boolean => state.serverSide.isServerSide;
+export const isServerSide: (state: IReduxState) => boolean =
+    (state: IReduxState): boolean => state.serverSide.isServerSide;
