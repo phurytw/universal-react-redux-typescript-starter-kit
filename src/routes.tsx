@@ -14,6 +14,7 @@ const routeConfig: RouteConfig[] = [
                 path: "/about"
             }, {
                 component: Main,
+                path: "/:username?"
             }]
         }]
     }
