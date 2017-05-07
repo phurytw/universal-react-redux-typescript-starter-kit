@@ -7,10 +7,10 @@ import { Provider } from "react-redux";
 import { Store } from "redux";
 import { ReduxState } from "./reducer";
 import createStore from "./store";
-import "./example/global.css";
-import { setIsServerSide } from "./example/modules/serverSide";
+import { setIsServerSide } from "./modules/serverSide";
 import { renderRoutes, RouteConfig } from "react-router-config";
 import { BrowserRouter } from "react-router-dom";
+import "./example/global.css";
 
 // this is defined with an up-to-date state if we come from a server side rendering context
 const store: Store<ReduxState> = createStore(window.__REDUX_STATE__);

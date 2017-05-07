@@ -10,7 +10,7 @@ npm install
 npm start
 ```
 
-This will start the demo application. At this point you can delete the `src/example` directory and you will get a blank page ! (and a few errors you will have to fix 😔)
+This will start the demo application. At this point you can delete the `src/example` directory and you will get a blank page ! (and a few errors you will have to fix 😔 in `src/index.tsx`, `src/reducer.ts` and `src/routes.tsx`)
 
 ## Packages used
 
@@ -41,7 +41,7 @@ And that's about it !
 
 ## Explanation
 
-Most of the code is just the React/Redux application. The action creators and reducers are located in the `src/example/modules` directory following the convention proposed [here](https://github.com/erikras/ducks-modular-redux). The root reducer is located in `src/reducer.ts`.
+Most of the code is just the React/Redux application. The action creators and reducers are located in the `src/example/modules` and `src/modules` directories following the convention proposed [here](https://github.com/erikras/ducks-modular-redux). The root reducer is located in `src/reducer.ts`.
 
 Everything that is server side is located in `src/server.tsx` which has a single `express` application that is responsible for serving the webpack bundle, HMR, and server side rendering.
 

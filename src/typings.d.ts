@@ -1,5 +1,5 @@
 /// <reference types="node" />
-// This page can also be used to define interfaces and types that are available globally in your application
+// This file can also be used to define interfaces and types that are available globally in your application
 
 interface Window {
     __REDUX_STATE__: any;

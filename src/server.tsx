@@ -18,7 +18,7 @@ import { ReduxState } from "./reducer";
 import { Store, Dispatch } from "redux";
 import "isomorphic-fetch";
 import * as serialize from "serialize-javascript";
-import { setIsServerSide } from "./example/modules/serverSide";
+import { setIsServerSide } from "./modules/serverSide";
 
 const app: Express = express();
 const port: number = 3000;

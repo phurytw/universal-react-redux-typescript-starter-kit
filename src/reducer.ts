@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
+import { RenderingState, default as serverSide } from "./modules/serverSide";
 import { GitHubUserState, default as user } from "./example/modules/user";
-import { RenderingState, default as serverSide } from "./example/modules/serverSide";
 
 export interface ReduxState {
     user?: GitHubUserState;
