@@ -6,7 +6,7 @@ export default (env: string): Configuration => {
     // add hot module replacement if not in production
     let entry: Entry = {
         main: "./src/index.tsx",
-        vendor: ["react", "react-dom", "react-router", "redux", "react-helmet", "react-redux", "serialize-javascript"]
+        vendor: ["react", "react-dom", "react-router-dom", "react-router-config", "redux", "react-helmet", "react-redux", "serialize-javascript"]
     };
     entry = env !== "production" ? {
         hot: ["react-hot-loader/patch", "webpack-hot-middleware/client"],
