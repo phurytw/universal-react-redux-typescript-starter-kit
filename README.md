@@ -145,7 +145,34 @@ The `tslint.json` config is taken from [piotrwitek's React & Redux in TypeScript
 
 If you wish to write tests I recommend that you use [`ts-node`](https://github.com/TypeStrong/ts-node#mocha) with your test framework.
 
-#### Example with mocha
+#### [Example with mocha]()
+
+We can run [`mocha`](https://mochajs.org) tests with [`ts-node`](https://github.com/TypeStrong/ts-node#mocha) with this command:
+```
+mocha --compilers ts:ts-node/register,tsx:ts-node/register <files>
+```
+
+We can also use the [--fast fast option in `ts-node`](https://github.com/TypeStrong/ts-node#configuration-options) for faster compilation. For this we need to create a register JavaScript file similar to `ts-node` that you should be located at `node_modules/ts-node/register.js` except that we will add the `fast` option:
+```js
+require("ts-node").register({
+    fast: true
+});
+```
+
+You can find an example of an unit test in the [mocha branch]() a test file a located in `src/example/components/__tests__/About.test.tsx`. I added a `test` script in `package.json` with the **updated command to run mocha with the new register file (that I named `ts-node-register.js`)**:
+```
+mocha --compilers ts:./ts-node-register.js,tsx:./ts-node-register.js src/**/__tests__/*.ts*
+```
+
+In order to run the tests I need the required packages:
+```
+npm i -D mocha chai enzyme react-test-renderer @types/mocha @types/chai @types/enzyme
+```
+
+Then we can simply run the test script:
+```
+npm test
+```
 
 ## Separate webpack dev server
 
