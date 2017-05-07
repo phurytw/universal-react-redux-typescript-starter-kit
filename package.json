@@ -6,6 +6,7 @@
     "start": "npm run start:dev",
     "start:prod": "cross-env NODE_ENV=production node dist/server/src/server.js",
     "start:dev": "ts-node ./src/server.tsx",
+    "start:webpack": "ts-node ./src/devServer.ts",
     "build:dev": "cross-env NODE_ENV=development ts-node scripts/build.ts",
     "build:prod": "cross-env NODE_ENV=production ts-node scripts/build.ts",
     "lint": "tslint --type-check -p tsconfig.json ./src/**/*.ts*"

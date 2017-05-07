@@ -149,6 +149,42 @@ If you wish to write tests I recommend that you use [`ts-node`](https://github.c
 
 ## Separate webpack dev server
 
+In the current setup the code relevant to compiling and serving the webpack bundle is inside an `if` statement in `src/server.tsx` You can create a separate webpack dev server and point the `<script>` tags to it. Let's say we want to server the webpack bundle from `http://localhost:3001`. First we're going to add that to the script tags in `src/server.tsx`:
+
+```ts
+const scripts: string[] = process.env.NODE_ENV === 'production' ?
+    [
+        'common.js',
+        'vendor.js',
+        'main.js',
+    ] : [
+        'http://localhost:3001/common.js',
+        'http://localhost:3001/vendor.js',
+        'http://localhost:3001/hot.js',
+        'http://localhost:3001/main.js',
+    ];
+```
+
+And later we use these in script tags like so:
+```tsx
+    <body>
+        <div id="root" dangerouslySetInnerHTML={{ __html: reactAppElement }} />
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
+        <script
+            dangerouslySetInnerHTML={{ __html: `window.__REDUX_STATE__=${serialize(store.getState())}` }}
+            charSet="UTF-8"
+        />
+        {scripts.map<JSX.Element>((src: string, i: number) => <script src={src} key={i} />)}
+    </body>
+```
+
+Then we're going to create the new webpack dev server `src/devServer.ts`. In that file we have an express application listening on port **3001**. We're going to serve the webpack bundle with `webpack-dev-middleware` and `webpack-hot-middleware`. But if we only do so it's not going to work very well. So we'll have to change a few things:
+- We need to allow CORS because the webpack HMR is going to poll that server from another domain (`http://localhost:3000`). In order to do that we added a `headers: { 'Access-Control-Allow-Origin': '*' }` to the webpack dev middleware options.
+- With the current webpack configuration the HMR is going to poll on the same domain which is `http://localhost:3000` in our case but we want it to poll `http://localhost:3001` instead. In order to do that we modify our webpack config by adding the URL to this server to the `webpack-hot-middleware` entry.
+- And at last, since the application is going to request the bundle at `http://localhost:3001` (instead of `/`) we need to adjust the `output.publicPath` accordingly.
+
+I added a new npm script `start:webpack` that starts this server. We can now start both `start:dev` and `start:webpack` and have the webpack bundle served from another server while retaining HMR and Hot reloading!
+
 ## Separate back-end / Proxying requests
 
 ## CSS Modules

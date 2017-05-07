@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import * as express from 'express';
-import * as webpackDevMiddleware from 'webpack-dev-middleware';
-import * as webpackHotMiddleware from 'webpack-hot-middleware';
-import * as webpack from 'webpack';
-import { Compiler, Configuration } from 'webpack';
-import webpackConfig from '../webpack.config';
 import { Express, Request, Response } from 'express-serve-static-core';
 import { StaticRouter } from 'react-router-dom';
 import { matchRoutes, renderRoutes, MatchedRoute } from 'react-router-config';
@@ -21,20 +16,6 @@ import 'isomorphic-fetch';
 
 const app: Express = express();
 const port = 3000;
-
-// hot module replacement
-if (process.env.NODE_ENV !== 'production') {
-    const config: Configuration = webpackConfig(process.env.NODE_ENV);
-    const compiler: Compiler = webpack(config);
-    app.use(webpackDevMiddleware(compiler, {
-        index: 'index.html',
-        publicPath: (config.output as webpack.Output).publicPath as string,
-        stats: {
-            colors: true,
-        },
-    }));
-    app.use(webpackHotMiddleware(compiler));
-}
 
 // needed to serve our application in production
 app.use(express.static('./dist/static'));
@@ -62,7 +43,16 @@ app.get('*', (req: Request, res: Response) => {
 
     Promise.all(promises).then(() => {
         const scripts: string[] = process.env.NODE_ENV === 'production' ?
-            ['common.js', 'vendor.js', 'main.js'] : ['common.js', 'vendor.js', 'hot.js', 'main.js'];
+            [
+                'common.js',
+                'vendor.js',
+                'main.js',
+            ] : [
+                'http://localhost:3001/common.js',
+                'http://localhost:3001/vendor.js',
+                'http://localhost:3001/hot.js',
+                'http://localhost:3001/main.js',
+            ];
         const head: HelmetData = Helmet.renderStatic();
         const reactAppElement: string = renderToString((
             <Provider store={store}>
