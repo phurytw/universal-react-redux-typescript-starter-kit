@@ -20,18 +20,18 @@ This will start the demo application. At this point you can delete the `src/exam
 * [react-redux](https://github.com/reactjs/react-redux) - use Redux with React
 * [typescript](https://github.com/Microsoft/TypeScript) - your favourite language !
 * [webpack](https://github.com/webpack/webpack) - module bundler
-* [react-router-dom](https://github.com/ReactTraining/react-router) - routing !
+* [react-router-dom](https://github.com/ReactTraining/react-router) - routing
 * [react-router-config](https://github.com/ReactTraining/react-router) - helpful for server side rendering
 * [express](https://github.com/expressjs/express) - used for server side rendering also serves the Webpack bundle
 * [awesome-typescript-loader](https://github.com/s-panferov/awesome-typescript-loader) - TypeScript loader for Webpack
 * [css-loader](https://github.com/webpack-contrib/css-loader) - CSS loader for Webpack
 * [style-loader](https://github.com/webpack-contrib/css-loader) - load CSS from the Webpack bundle
-* [extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) - create a separate CSS file to include it in the server side rendered pages
+* [extract-text-webpack-plugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) - create a separate CSS file from your Webpack config
 * [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) - allows fetch to be used server side
 * [serialize-javascript](https://github.com/yahoo/serialize-javascript) - allows to safely pass the redux state from the server to the client
 * [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) and [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware) - hot module replacement and serve the bundle
 * [ts-node](https://github.com/TypeStrong/ts-node) - runs TypeScript code without compiling it in your file system
-* [tslint](https://github.com/palantir/tslint) - TypeScript code linter
+* [tslint](https://github.com/palantir/tslint) and [tslint-react](https://github.com/palantir/tslint-react) - TypeScript code linter
 * [postcss-loader](https://github.com/postcss/postcss) and [autoprefixer](https://github.com/postcss/autoprefixer) - adds vendor prefixes to your CSS code
 * [react-helmet](https://github.com/nfl/react-helmet) - easily changes your head tag
 * [@types/<your_favourite_package>](https://github.com/DefinitelyTyped/DefinitelyTyped) - type definitions for TypeScript
@@ -133,6 +133,10 @@ We fill the `<head>` tag with the help of the Helmet object and the application'
 The webpack generated scripts are also added note that we don't add the `hot.js` in production since it is the bit relevant to HMR and hot reloading and we don't want that in production.
 
 Then finally in `/src/index.tsx`, we get our Redux state then we initialize our store with it.
+
+### tslint
+
+The `tslint.json` config is taken from [piotrwitek's React & Redux in TypeScript - Static Typing Guide](https://github.com/piotrwitek/react-redux-typescript-guide#tslintjson).
 
 ## More stuff
 
