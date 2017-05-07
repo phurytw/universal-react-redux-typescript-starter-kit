@@ -1,7 +1,7 @@
 {
   "name": "universal-react-redux-typescript-starter-kit",
-  "version": "0.2.0",
-  "description": "A minimal starter kit with React, Redux, server side rendering, hot reloading, and Webpack 2. 100% TypeScript.",
+  "version": "1.0.0",
+  "description": "A minimal starter kit with React, Redux, server side rendering with React-Router 4, hot reloading, and Webpack 2. 100% TypeScript.",
   "scripts": {
     "start": "npm run start:dev",
     "start:prod": "cross-env NODE_ENV=production node dist/server/src/server.js",
