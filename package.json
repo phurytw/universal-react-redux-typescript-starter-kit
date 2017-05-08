@@ -4,7 +4,7 @@
   "description": "A minimal starter kit with React, Redux, server side rendering with React-Router 4, hot reloading, and Webpack 2. 100% TypeScript.",
   "scripts": {
     "start": "npm run start:dev",
-    "start:prod": "cross-env NODE_ENV=production node dist/server/src/server.js",
+    "start:prod": "cross-env NODE_ENV=production node dist/src/server.js",
     "start:dev": "ts-node ./src/server.tsx",
     "build:dev": "cross-env NODE_ENV=development ts-node scripts/build.ts",
     "build:prod": "cross-env NODE_ENV=production ts-node scripts/build.ts",
