@@ -80,6 +80,7 @@ export class GitHubSearchLayout extends React.Component<IGitHubSearchProps, {}> 
                 <nav role="navigation" className="navbar">
                     <ul>
                         <li><Link to="/">Home</Link></li>
+                        <li><Link to="/session">Session</Link></li>
                         <li><Link to="/about">About</Link></li>
                     </ul>
                 </nav>

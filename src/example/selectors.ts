@@ -9,3 +9,6 @@ export const getError: (state: IReduxState) => string | undefined =
 
 export const isServerSide: (state: IReduxState) => boolean =
     (state: IReduxState): boolean => state.serverSide.isServerSide;
+
+export const getSessionValue: (state: IReduxState) => string | undefined =
+    (state: IReduxState): string | undefined => state.session.value;

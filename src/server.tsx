@@ -18,6 +18,7 @@ import { Store, Dispatch } from 'redux';
 import * as serialize from 'serialize-javascript';
 import { setIsServerSide } from './modules/serverSide';
 import 'isomorphic-fetch';
+import * as httpProxy from 'http-proxy';
 
 const app: Express = express();
 const port = 3000;
@@ -36,11 +37,19 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(webpackHotMiddleware(compiler));
 }
 
+// proxying api requests
+const apiProxy: httpProxy = httpProxy.createProxyServer({
+    target: 'http://localhost:8000',
+});
+app.all('/api*', (req: Request, res: Response) => {
+    apiProxy.web(req, res);
+});
+
 // needed to serve our application in production
 app.use(express.static('./dist/static'));
 
 app.get('*', (req: Request, res: Response) => {
-    const store: Store<IReduxState> = createStore();
+    const store: Store<IReduxState> = createStore(undefined, { Cookie: req.get('Cookie') });
     const dispatch: Dispatch<IReduxState> = store.dispatch;
     const context: { url?: string } = {};
 

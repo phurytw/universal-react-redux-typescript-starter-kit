@@ -149,7 +149,105 @@ If you wish to write tests I recommend that you use [`ts-node`](https://github.c
 
 ## Separate webpack dev server
 
-## Separate back-end / Proxying requests
+## Separate API / Proxying requests
+
+#### Proxying requests
+
+If your application queries a server from another domain it might get cookies that will not be used when doing the first page request (since it wouldn't be on the same domain). In order to use the same domain we can use [`http-proxy`](https://github.com/nodejitsu/node-http-proxy) and pass the requests to another server.
+```
+npm i -S http-proxy
+```
+
+Unfortunately there is no type definitions available for it via `@types`. So I have used type definitions that I found [there](https://github.com/typed-contrib/node-http-proxy).
+
+I have setup a simple express app (located at `src/api.ts`) that stores a string in memory (via session) and we can retrieve it on page load. That server listens to port **8000**. This is its API:
+* `GET /api`: retrieves the stored string
+* `POST /api/:string`: stores a string in session
+
+We also need to install `express-session`:
+```
+npm i -S express-session
+npm i -D @types/express-session
+```
+
+In `src/server.tsx` we are going to create a proxy server with `http-proxy` that proxies every request that starts with `/api` to `http://localhost:8000`:
+```ts
+const apiProxy: httpProxy = httpProxy.createProxyServer({
+    target: 'http://localhost:8000',
+});
+app.all('/api*', (req: Request, res: Response) => {
+    apiProxy.web(req, res);
+});
+```
+
+#### Redux-Thunk and server side requests
+
+Now we can perform requests to `http://localhost:3000` and it will use the API server located at `http://localhost:8000` and set the cookies for `http://localhost:3000`. But let's not do that now.
+
+What happens when we perform the first page request? The request might send a nice cookie but the code still remain a simple `fetch` call. The server fetches data one the behalf of the server and does not pass the cookie which is not what we want. We need to find a way to pass the proper cookie depending on the context.
+
+An elegant solution would be to use [`redux-thunk` with the extra argument](https://github.com/gaearon/redux-thunk#injecting-a-custom-argument). In this extra argument we're going to set the cookie and we'll know by its presence if we're coming from a server side context. First let's install `redux-thunk`:
+```
+npm i -S redux-thunk
+npm i -D @types/redux-thunk
+```
+
+Then add it to our store factory with the extra argument:
+```ts
+import reduxThunk from 'redux-thunk';
+const configureStore: (initialState?: IReduxState, cookie?: { Cookie?: string }) => Store<IReduxState> =
+    (initialState?: IReduxState, cookie: { Cookie?: string } = {}): Store<IReduxState> => {
+        return createStore<IReduxState>(reducer,
+            initialState as IReduxState,
+            applyMiddleware(reduxThunk.withExtraArgument(cookie)));
+    };
+```
+
+And finally we can create action creators like so:
+```ts
+export function fetchValue(): ThunkAction<Promise<SetValue>, ISessionState, { Cookie?: string }> {
+    return (
+        dispatch: Dispatch<ISessionState>,
+        getState: () => ISessionState,
+        extra: { Cookie?: string }) => fetch('http://localhost:3000/api', {
+            credentials: 'include',
+            headers: {
+                ...extra,
+            },
+        })
+            .then<{ value: string | undefined }>((response: Response) => response.json())
+            .then<SetValue>((result: { value: string | undefined }) => dispatch({
+                type: SET_VALUE,
+                value: result.value,
+            }));
+}
+```
+
+Now we just need to pass the cookie in the new store factory when we create the store in `src/server.tsx`:
+```ts
+const store: Store<IReduxState> = createStore(undefined, req.get('Cookie'));
+```
+
+This is what happens in the first page request:
+1. If the browser has a cookie for `http://localhost:3000` it will send it to the server.
+2. The server initiates a new store with a `redux-thunk` extra argument containing the cookie.
+3. When performing async data fetching the action creators will be called and we pass the cookie to the `fetch` options.
+4. The async request is proxied to the API server at `http://localhost:8000` that receives the request with the cookie.
+5. The API server responds with the correct data.
+
+After the first page request subsequent requests are done client side:
+1. In the client side the store is not initialized with a cookie.
+2. When performing an async request the cookie is not present.
+3. `fetch` will use the browser's cookie.
+
+You can find all relevant code in:
+* `src/example/session.ts`: a Redux module with action creators, action types and reducer relevant to our application.
+* `src/example/components/Session.tsx`: a component that fetch the stored value and displays a form to change it.
+* `src/store.ts`: the new store factory using the `redux-thunk` middleware with an extra argument
+* `src/server.tsx`: uses the new store factory by passing the cookie and a request handler that uses a proxy server.
+* `src/api.ts`: an express application listening to port **8000**.
+
+You can now start both servers with `npm run start:dev` and `npm run start:api` and open `http://localhost:3000/session`.
 
 ## CSS Modules
 
