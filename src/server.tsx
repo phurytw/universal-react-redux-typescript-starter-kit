@@ -10,7 +10,6 @@ import { Express, Request, Response } from 'express-serve-static-core';
 import { StaticRouter } from 'react-router-dom';
 import { matchRoutes, renderRoutes, MatchedRoute } from 'react-router-config';
 import { Helmet, HelmetData } from 'react-helmet';
-import routeConfig from './routes';
 import { Provider } from 'react-redux';
 import createStore from './store';
 import { IReduxState } from './reducer';
@@ -18,6 +17,9 @@ import { Store, Dispatch } from 'redux';
 import * as serialize from 'serialize-javascript';
 import { setIsServerSide } from './modules/serverSide';
 import 'isomorphic-fetch';
+import hook from './cssHook';
+hook();
+import routeConfig from './routes';
 
 const app: Express = express();
 const port = 3000;

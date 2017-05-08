@@ -10,7 +10,8 @@
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "allowJs": true
   },
   "exclude": [
     "node_modules",

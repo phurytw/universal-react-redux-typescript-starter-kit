@@ -12,6 +12,8 @@ import {
 } from 'webpack';
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 
+export const cssModulePattern = '[name]__[local]___[hash:base64:8]';
+
 export default (env: string): Configuration => {
     // add hot module replacement if not in production
     let entry: Entry = {
@@ -60,10 +62,26 @@ export default (env: string): Configuration => {
         ];
     const cssRule: Rule = env === 'production' ? {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract(['css-loader', 'postcss-loader']),
+        use: ExtractTextPlugin.extract([{
+            loader: 'css-loader',
+            options: {
+                modules: true,
+                sourceMap: true,
+                importLoaders: 1,
+                localIdentName: cssModulePattern,
+            },
+        }, 'postcss-loader']),
     } : {
             test: /\.css$/,
-            use: ['style-loader', 'css-loader', 'postcss-loader'],
+            use: ['style-loader', {
+                loader: 'css-loader',
+                options: {
+                    modules: true,
+                    sourceMap: true,
+                    importLoaders: 1,
+                    localIdentName: cssModulePattern,
+                },
+            }, 'postcss-loader'],
         };
 
     return {

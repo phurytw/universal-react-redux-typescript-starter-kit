@@ -1,0 +1,11 @@
+.face {
+    float: right;
+    max-width: 100px;
+}
+
+.githubPreview {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2em;
+    margin: 2em;
+}
