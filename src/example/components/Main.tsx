@@ -49,7 +49,8 @@ class MainComponent extends React.Component<IMainProps, {}> {
             fetchUser(username || me);
         }
     }
-    fetchUser: () => void = (): void => {
+    fetchUser: (event: React.FormEvent<HTMLFormElement>) => void = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
         this.props.fetchUser(this.usernameInput.value || me);
     }
     fetchMe: () => void = (): void => {
