@@ -18,7 +18,7 @@ const program = ts.createProgram(['./src/server.tsx'], {
     lib: ['lib.es6.d.ts'],
     jsx: ts.JsxEmit.React,
     noEmitOnError: true,
-    noImplicitAny: true,
+    strict: true,
     noUnusedLocals: true,
     sourceMap: true,
     outDir: './dist',

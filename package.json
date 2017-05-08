@@ -6,8 +6,7 @@
     "start": "cross-env NODE_ENV=production node dist/src/server.js",
     "build": "cross-env NODE_ENV=production ts-node scripts/build.ts",
     "start:dev": "ts-node ./src/server.tsx",
-    "build:dev": "cross-env NODE_ENV=development ts-node scripts/build.ts",
-    "postinstall": "npm run build",
+    "postinstall": "cross-env NODE_ENV=production ts-node scripts/build.ts",
     "lint": "tslint --type-check -p tsconfig.json ./src/**/*.ts*"
   },
   "repository": {

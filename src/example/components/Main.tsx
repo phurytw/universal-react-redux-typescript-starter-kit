@@ -14,7 +14,7 @@ export const mapStateToProps: (state: IReduxState, ownProps: IMainProps) => Part
     (state: IReduxState, ownProps: IMainProps): Partial<IMainProps> => ({
         user: getUser(state),
         error: getError(state),
-        hasRendered: isServerSide(state),
+        isServerSide: isServerSide(state),
     });
 
 export const mapDispatchToProps: (dispatch: Dispatch<IReduxState>, ownProps: IMainProps) => Partial<IMainProps> =
@@ -30,7 +30,7 @@ export interface IMainProps extends RouteComponentProps<IMainParams> {
     fetchUser: (username: string) => void;
     user: IGitHubUserData;
     error: string;
-    hasRendered: boolean;
+    isServerSide: boolean;
 }
 
 class MainComponent extends React.Component<IMainProps, {}> {
@@ -42,10 +42,10 @@ class MainComponent extends React.Component<IMainProps, {}> {
         super(props);
     }
     componentWillMount(): void {
-        const { hasRendered, fetchUser, match: { params: { username } } }: IMainProps = this.props;
+        const { isServerSide, fetchUser, match: { params: { username } } }: IMainProps = this.props;
         // this prevents the data to be fetched on page load by the client
         // if it was already loaded server side
-        if (!hasRendered) {
+        if (!isServerSide) {
             fetchUser(username || me);
         }
     }
