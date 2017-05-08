@@ -6,8 +6,6 @@ const projectURL = 'https://github.com/lith-light-g/universal-react-redux-typesc
 export default (props: RouteComponentProps<void>) => (
     <div>
         <h2>About</h2>
-        <p>
-            Find more about this starter kit on <a href={projectURL}>GitHub</a>.
-    </p>
+        <p>Find more about this starter kit on <a href={projectURL}>GitHub</a>.</p>
     </div>
 );
